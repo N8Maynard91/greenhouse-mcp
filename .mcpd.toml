@@ -1,0 +1,44 @@
+# MCPD Configuration for Greenhouse MCP Server
+
+[server]
+name = "greenhouse-mcp"
+description = "MCP server for Greenhouse Harvest API integration"
+version = "0.1.0"
+
+[server.runtime]
+type = "python"
+command = "uvx"
+args = ["greenhouse-mcp"]
+
+[server.environment]
+GREENHOUSE_API_KEY = "${GREENHOUSE_API_KEY}"
+GREENHOUSE_BASE_URL = "${GREENHOUSE_BASE_URL:-https://harvest.greenhouse.io/v1}"
+
+[server.capabilities]
+tools = true
+resources = false
+prompts = false
+
+[server.metadata]
+author = "Your Name"
+repository = "https://github.com/yourusername/greenhouse-mcp"
+documentation = "https://github.com/yourusername/greenhouse-mcp#readme"
+license = "MIT"
+
+[server.requirements]
+python = ">=3.9"
+dependencies = [
+    "fastmcp>=2.0.0",
+    "httpx>=0.24.0",
+    "pydantic>=2.0.0",
+    "python-dotenv>=1.0.0"
+]
+
+[server.health]
+check_interval = 30
+timeout = 10
+
+[deployment]
+auto_restart = true
+max_restarts = 3
+restart_delay = 5
