@@ -20,6 +20,7 @@ The Greenhouse MCP server provides tools for:
 ### Application Tracking
 - `list_applications` - List applications with filtering
 - `get_application` - Get detailed application information
+- `get_job_stage` - Get job stage details including interview types configured for the stage
 - `advance_application` - Move applications through hiring stages
 - `reject_application` - Reject applications with reasons
 - `add_note_to_application` - Add notes to applications
@@ -42,7 +43,7 @@ pip install greenhouse-mcp
 
 ### Install from source
 ```bash
-git clone https://github.com/yourusername/greenhouse-mcp.git
+git clone https://github.com/natemaynard/greenhouse-mcp.git
 cd greenhouse-mcp
 pip install -e .
 ```
@@ -135,7 +136,7 @@ The server automatically handles Greenhouse API rate limits:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/greenhouse-mcp.git
+git clone https://github.com/natemaynard/greenhouse-mcp.git
 cd greenhouse-mcp
 
 # Create virtual environment

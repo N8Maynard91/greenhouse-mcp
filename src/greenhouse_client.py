@@ -269,3 +269,18 @@ class GreenhouseClient:
             params["email"] = email
             
         return await self._make_request("GET", "users", params=params)
+    
+    async def get_job_stage(self, job_stage_id: int) -> Dict[str, Any]:
+        """
+        Get job stage details by stage ID from Greenhouse.
+        
+        Returns stage info including the interviews array — critical for knowing 
+        what interview types need to be scheduled (Backend Coding, System Design, etc.)
+        
+        Args:
+            job_stage_id: The Greenhouse job stage ID (from application.current_stage.id)
+        
+        Returns:
+            Stage details including interviews array with interview types
+        """
+        return await self._make_request("GET", f"job_stages/{job_stage_id}")

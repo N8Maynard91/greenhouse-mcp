@@ -607,6 +607,48 @@ async def list_users(
         raise
 
 
+@mcp.tool
+async def get_job_stage(
+    job_stage_id: int,
+    ctx: Context = None
+) -> Dict[str, Any]:
+    """
+    Get job stage details by stage ID from Greenhouse.
+    
+    Returns stage info including the interviews array — critical for knowing 
+    what interview types need to be scheduled (Backend Coding, System Design, etc.).
+    
+    Typical usage flow:
+    1. get_application(app_id) → returns current_stage.id (e.g., 24348514)
+    2. get_job_stage(24348514) → returns interviews[] for that stage
+    
+    Args:
+        job_stage_id: The Greenhouse job stage ID (from application.current_stage.id)
+    
+    Returns:
+        {
+            "id": 24348514,
+            "name": "1st Round (CodeCollab)",
+            "interviews": [
+                {"id": 37752251, "name": "Backend Coding Interview", "estimated_minutes": 60},
+                {"id": 37752247, "name": "BE System Design Interview", "estimated_minutes": 60}
+            ]
+        }
+    """
+    try:
+        gh_client = get_client()
+        stage = await gh_client.get_job_stage(job_stage_id)
+        if ctx:
+            stage_name = stage.get("name", "Unknown")
+            interview_count = len(stage.get("interviews", []))
+            ctx.info(f"Retrieved job stage: {stage_name} ({interview_count} interviews)")
+        return stage
+    except Exception as e:
+        if ctx:
+            ctx.error(f"Failed to get job stage {job_stage_id}: {str(e)}")
+        raise
+
+
 def main():
     """Main entry point for the MCP server."""
     import sys
