@@ -608,6 +608,49 @@ async def list_users(
 
 
 @mcp.tool
+async def list_job_stages(
+    per_page: int = 50,
+    page: int = 1,
+    job_id: Optional[int] = None,
+    created_after: Optional[str] = None,
+    created_before: Optional[str] = None,
+    ctx: Context = None
+) -> List[Dict[str, Any]]:
+    """
+    List all job stages in Greenhouse.
+    
+    Use this to see all hiring pipeline stages across jobs, or filter by job_id
+    to see stages for a specific job.
+    
+    Args:
+        per_page: Number of results per page (max 500)
+        page: Page number to retrieve
+        job_id: Filter by job ID to get stages for a specific job
+        created_after: ISO 8601 date to filter stages created after
+        created_before: ISO 8601 date to filter stages created before
+    
+    Returns:
+        List of job stage objects with id, name, job_id, etc.
+    """
+    try:
+        gh_client = get_client()
+        stages = await gh_client.list_job_stages(
+            per_page=per_page,
+            page=page,
+            job_id=job_id,
+            created_after=created_after,
+            created_before=created_before
+        )
+        if ctx:
+            ctx.info(f"Retrieved {len(stages)} job stages")
+        return stages
+    except Exception as e:
+        if ctx:
+            ctx.error(f"Failed to list job stages: {str(e)}")
+        raise
+
+
+@mcp.tool
 async def get_job_stage(
     job_stage_id: int,
     ctx: Context = None
