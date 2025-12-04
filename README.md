@@ -44,7 +44,7 @@ pip install greenhouse-mcp
 
 ### Install from source
 ```bash
-git clone https://github.com/natemaynard/greenhouse-mcp.git
+git clone https://github.com/yourname/greenhouse-mcp.git
 cd greenhouse-mcp
 pip install -e .
 ```
@@ -137,7 +137,7 @@ The server automatically handles Greenhouse API rate limits:
 
 ```bash
 # Clone the repository
-git clone https://github.com/natemaynard/greenhouse-mcp.git
+git clone https://github.com/yourname/greenhouse-mcp.git
 cd greenhouse-mcp
 
 # Create virtual environment
