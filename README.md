@@ -20,6 +20,8 @@ The Greenhouse MCP server provides tools for:
 ### Application Tracking
 - `list_applications` - List applications with filtering
 - `get_application` - Get detailed application information
+- `list_job_stages` - List all job stages (optionally filter by job ID)
+- `get_job_stage` - Get job stage details including interview types configured for the stage
 - `advance_application` - Move applications through hiring stages
 - `reject_application` - Reject applications with reasons
 - `add_note_to_application` - Add notes to applications

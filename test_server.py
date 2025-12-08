@@ -44,6 +44,8 @@ def test_tools():
             "update_candidate",
             "list_applications",
             "get_application",
+            "list_job_stages",
+            "get_job_stage",
             "advance_application",
             "reject_application",
             "add_note_to_candidate",

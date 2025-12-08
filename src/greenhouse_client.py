@@ -269,3 +269,52 @@ class GreenhouseClient:
             params["email"] = email
             
         return await self._make_request("GET", "users", params=params)
+    
+    async def list_job_stages(
+        self,
+        per_page: int = 50,
+        page: int = 1,
+        job_id: Optional[int] = None,
+        created_after: Optional[str] = None,
+        created_before: Optional[str] = None
+    ) -> List[Dict[str, Any]]:
+        """
+        List all job stages from Greenhouse.
+        
+        Args:
+            per_page: Number of results per page (max 500)
+            page: Page number to retrieve
+            job_id: Filter by job ID to get stages for a specific job
+            created_after: ISO 8601 date to filter stages created after
+            created_before: ISO 8601 date to filter stages created before
+        
+        Returns:
+            List of job stage objects
+        """
+        params = {
+            "per_page": per_page,
+            "page": page,
+        }
+        if job_id:
+            params["job_id"] = job_id
+        if created_after:
+            params["created_after"] = created_after
+        if created_before:
+            params["created_before"] = created_before
+            
+        return await self._make_request("GET", "job_stages", params=params)
+    
+    async def get_job_stage(self, job_stage_id: int) -> Dict[str, Any]:
+        """
+        Get job stage details by stage ID from Greenhouse.
+        
+        Returns stage info including the interviews array — critical for knowing 
+        what interview types need to be scheduled (Backend Coding, System Design, etc.)
+        
+        Args:
+            job_stage_id: The Greenhouse job stage ID (from application.current_stage.id)
+        
+        Returns:
+            Stage details including interviews array with interview types
+        """
+        return await self._make_request("GET", f"job_stages/{job_stage_id}")
